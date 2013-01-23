@@ -66,6 +66,9 @@ HELP_ADVANCED='
  ff_debug [<tag_expr>] [--help] [--list_valid_tags] [--reset]
   Add and remove flimflam debugging tags.
 
+ hud [on|off]
+  Turns the hud dispaly on or off. Reboot to take effect.
+
  modem <command> [args...]
   Interact with the 3G modem. Run "modem help" for detailed help.
 
@@ -773,6 +776,32 @@ cmd_top() {
   # -s is "secure" mode, which disables kill, renice, and change display/sleep
   # interval.
   top -s
+}
+
+cmd_hud() {
+  local magic_file="/home/chronos/.hudenabled"
+  if [ -z "$1" ]; then
+    if [ -f "$magic_file" ]; then
+      echo HUD is enabled.
+    else
+      echo HUD is disabled.
+    fi
+    return
+  fi
+
+  if [ "$1" = "on" ]; then
+    echo Turning on HUD. Reboot to take effect
+    touch $magic_file
+    return
+  fi
+
+  if [ "$1" = "off" ]; then
+    echo Turning off HUD. Reboot to take effect
+    rm -f $magic_file
+    return
+  fi
+
+  echo Unknown hud command
 }
 
 cmd_modem() {
