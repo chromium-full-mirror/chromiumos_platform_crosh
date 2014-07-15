@@ -693,6 +693,8 @@ cmd_swap() (
     echo "  swap status          print swap device max and current size (if on)"
     echo "  swap enable [<optional swap size (MB)>]"
     echo "  swap disable"
+    echo "NOTE: Compressed swap is ON by default.  No tweaking is necessary."
+    echo "NOTE: These controls are available for debugging/testing only."
     return 1
     ;;
   esac
